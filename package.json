@@ -1,6 +1,10 @@
 {
   "name": "sct-proxy",
   "version": "0.0.1",
+  "scripts": {
+    "lint:solidity": "solhint 'contracts/**/*.sol'",
+    "prettier": "prettier --write . && git add"
+  },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.4.1",
     "@nomiclabs/hardhat-ethers": "^2.0.2",

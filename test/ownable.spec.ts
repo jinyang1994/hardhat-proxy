@@ -54,8 +54,9 @@ describe('Ownable', () => {
     const proxy = await Proxy.deploy()
 
     await proxy.deployed()
-    await expect(proxy.connect(other).transferOwnership(receiver.address))
-      .to.be.revertedWith('Ownable: caller is not the owner')
+    await expect(
+      proxy.connect(other).transferOwnership(receiver.address)
+    ).to.be.revertedWith('Ownable: caller is not the owner')
   })
 
   it('Not owner call setFunctionImplementation', async () => {
@@ -70,8 +71,9 @@ describe('Ownable', () => {
     await proxy.deployed()
     await impl.deployed()
     // 0xa4136862 is Implementation contract's setGreeting method
-    await expect(proxy.connect(other).setFunctionImplementation('0xa4136862', impl.address))
-      .to.be.revertedWith('Ownable: caller is not the owner')
+    await expect(
+      proxy.connect(other).setFunctionImplementation('0xa4136862', impl.address)
+    ).to.be.revertedWith('Ownable: caller is not the owner')
   })
 
   it('Not owner call bootstrap', async () => {
@@ -86,7 +88,8 @@ describe('Ownable', () => {
     await proxy.deployed()
     await greeter.deployed()
     await impl.deployed()
-    await expect(proxy.connect(other).bootstrap(impl.address))
-      .to.be.revertedWith('Ownable: caller is not the owner')
+    await expect(
+      proxy.connect(other).bootstrap(impl.address)
+    ).to.be.revertedWith('Ownable: caller is not the owner')
   })
 })

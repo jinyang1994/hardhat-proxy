@@ -22,7 +22,7 @@ const hardhatConfig: HardhatUserConfig = {
   networks: {
     hardhat: {
       // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
-      initialBaseFeePerGas: 0 
+      initialBaseFeePerGas: 0
     },
     ropsten: {
       url: process.env.ROPSTEN_URL || '',
