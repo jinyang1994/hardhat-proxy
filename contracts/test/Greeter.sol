@@ -16,7 +16,9 @@ contract Greeter {
     }
 
     function setGreeting(string memory _greeting) public {
-        console.log('Changing greeting from \'%s\' to \'%s\'', greeting, _greeting);
+        // solhint-disable quotes
+        console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
+        // solhint-enable quotes
         greeting = _greeting;
     }
 }

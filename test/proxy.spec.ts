@@ -50,9 +50,11 @@ describe('Proxy', () => {
     await proxy.bootstrap(implA.address)
     await proxy.bootstrap(implB.address)
 
-    const greet = await greeter.greet()
-    // Check greeter original greet
-    expect(greet).to.be.equal('Hello, world!')
+    {
+      const greet = await greeter.greet()
+      // Check greeter original greet
+      expect(greet).to.be.equal('Hello, world!')
+    }
 
     // Run setGreetingA in proxy
     {
