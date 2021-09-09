@@ -1,9 +1,9 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
+import { expect } from 'chai'
+import { ethers } from 'hardhat'
 
 describe('Ownable', () => {
   it('Check owner is signer', async () => {
-    const signer = await ethers.getSigner()
+    const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const proxy = await Proxy.deploy()
 
@@ -15,7 +15,7 @@ describe('Ownable', () => {
   })
 
   it('Check if the owner is the signer after register function implementation', async () => {
-    const signer = await ethers.getSigner()
+    const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
     const Implementation = await ethers.getContractFactory('Implementation')

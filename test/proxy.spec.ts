@@ -1,6 +1,6 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
-const { BigNumber } = require('@ethersproject/bignumber')
+import { expect } from 'chai'
+import { ethers } from 'hardhat'
+import { BigNumber } from '@ethersproject/bignumber'
 
 describe('Proxy', () => {
   it('Register function implementation', async () => {
@@ -32,7 +32,7 @@ describe('Proxy', () => {
   })
 
   it('Proxy call implementation contract', async () => {
-    const signer = await ethers.getSigner()
+    const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
     const ImplementationA = await ethers.getContractFactory('ImplementationA')

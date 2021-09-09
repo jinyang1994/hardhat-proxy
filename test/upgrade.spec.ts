@@ -1,10 +1,10 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
-const { BigNumber } = require('@ethersproject/bignumber')
+import { expect } from 'chai'
+import { ethers } from 'hardhat'
+import { BigNumber } from '@ethersproject/bignumber'
 
 describe('Upgrade', () => {
   it('Owner update implementation contract', async () => {
-    const signer = await ethers.getSigner()
+    const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const FirstGreeter = await ethers.getContractFactory('Greeter')
     const LastGreeter = await ethers.getContractFactory('Greeter')
