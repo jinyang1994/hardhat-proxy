@@ -6,49 +6,41 @@ describe('Proxy', () => {
   it('Register function implementation', async () => {
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
-    const ImplementationA = await ethers.getContractFactory('ImplementationA')
-    const ImplementationB = await ethers.getContractFactory('ImplementationB')
+    const Implementation = await ethers.getContractFactory('Implementation')
     const proxy = await Proxy.deploy()
     const greeter = await Greeter.deploy('Hello, world!')
-    const implA = await ImplementationA.deploy(greeter.address)
-    const implB = await ImplementationB.deploy(greeter.address)
+    const impl = await Implementation.deploy(greeter.address)
 
     await proxy.deployed()
     await greeter.deployed()
-    await implA.deployed()
-    await implB.deployed()
+    await impl.deployed()
 
-    await proxy.bootstrap(implA.address)
-    await proxy.bootstrap(implB.address)
+    await proxy.bootstrap(impl.address)
 
-    // 0x8d75376a is ImplementationA contract's setGreetingA function
+    // 0x8d75376a is Implementation contract's setGreetingA function
     const setGreetingA = await proxy.getFunctionImplementation('0x8d75376a')
-    // 0x22df2236 is ImplementationB contract's setGreetingB function
+    // 0x22df2236 is Implementation contract's setGreetingB function
     const setGreetingB = await proxy.getFunctionImplementation('0x22df2236')
 
     // Check methods implementation address
-    expect(setGreetingA).to.be.equal(implA.address)
-    expect(setGreetingB).to.be.equal(implB.address)
+    expect(setGreetingA).to.be.equal(impl.address)
+    expect(setGreetingB).to.be.equal(impl.address)
   })
 
   it('Proxy call implementation contract', async () => {
     const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
-    const ImplementationA = await ethers.getContractFactory('ImplementationA')
-    const ImplementationB = await ethers.getContractFactory('ImplementationB')
+    const Implementation = await ethers.getContractFactory('Implementation')
     const proxy = await Proxy.deploy()
     const greeter = await Greeter.deploy('Hello, world!')
-    const implA = await ImplementationA.deploy(greeter.address)
-    const implB = await ImplementationB.deploy(greeter.address)
+    const impl = await Implementation.deploy(greeter.address)
 
     await proxy.deployed()
     await greeter.deployed()
-    await implA.deployed()
-    await implB.deployed()
+    await impl.deployed()
 
-    await proxy.bootstrap(implA.address)
-    await proxy.bootstrap(implB.address)
+    await proxy.bootstrap(impl.address)
 
     {
       const greet = await greeter.greet()
@@ -58,7 +50,7 @@ describe('Proxy', () => {
 
     // Run setGreetingA in proxy
     {
-      const { data } = await implA.populateTransaction.setGreetingA()
+      const { data } = await impl.populateTransaction.setGreetingA()
       const tx = await signer.sendTransaction({
         to: proxy.address,
         value: BigNumber.from('0').toHexString(),
@@ -71,12 +63,12 @@ describe('Proxy', () => {
 
       const greet = await greeter.greet()
       // Check greet after run setGreetingA
-      expect(greet).to.be.equal('Changed by ImplementationA')
+      expect(greet).to.be.equal('Changed by setGreetingA')
     }
 
     // Run setGreetingB in proxy
     {
-      const { data } = await implB.populateTransaction.setGreetingB()
+      const { data } = await impl.populateTransaction.setGreetingB()
       const tx = await signer.sendTransaction({
         to: proxy.address,
         value: BigNumber.from('0').toHexString(),
@@ -89,7 +81,7 @@ describe('Proxy', () => {
 
       const greet = await greeter.greet()
       // Check greet after run setGreetingB
-      expect(greet).to.be.equal('Changed by ImplementationB')
+      expect(greet).to.be.equal('Changed by setGreetingB')
     }
   })
 })

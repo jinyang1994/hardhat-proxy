@@ -2,9 +2,10 @@
 
 pragma solidity ^0.8.0;
 
+import 'hardhat/console.sol';
+import '../../contracts/Register.sol';
+import '../../contracts/utils/LibRegister.sol';
 import './interface/IGreeter.sol';
-import '../src/Register.sol';
-import '../src/utils/LibRegister.sol';
 
 contract Implementation is Register {
     address private immutable target;
@@ -15,10 +16,20 @@ contract Implementation is Register {
 
     function register() public override returns (bytes4 success) {
         _register(this.setGreeting.selector);
+        _register(this.setGreetingA.selector);
+        _register(this.setGreetingB.selector);
         return LibRegister.REGISTER_SUCCESS;
     }
 
-    function setGreeting(string calldata greet) public {
+    function setGreeting(string memory greet) public {
         IGreeter(target).setGreeting(greet);
+    }
+
+    function setGreetingA() public {
+        setGreeting('Changed by setGreetingA');
+    }
+
+    function setGreetingB() public {
+        setGreeting('Changed by setGreetingB');
     }
 }

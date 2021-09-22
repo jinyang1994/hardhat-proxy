@@ -1,5 +1,8 @@
-import { task, HardhatUserConfig } from 'hardhat/config'
+import { task, subtask, HardhatUserConfig } from 'hardhat/config'
+import { glob } from '@nomiclabs/buidler/internal/util/glob'
+import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from 'hardhat/builtin-tasks/task-names'
 import { config as dotenvConfig } from 'dotenv'
+import path from 'path'
 import '@nomiclabs/hardhat-waffle'
 import '@nomiclabs/hardhat-etherscan'
 import 'hardhat-gas-reporter'
@@ -13,6 +16,16 @@ task('accounts', 'Prints the list of accounts', async (_, hre) => {
   const accounts = await hre.ethers.getSigners()
 
   accounts.forEach(account => console.log(account.address))
+})
+
+// Override get compile paths task, compile the contracts in the test dir
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS, async (_, hre, runSuper) => {
+  const sources = await runSuper()
+  const testSources = await glob(
+    path.join(hre.config.paths.tests, '**', '*.sol')
+  )
+
+  return [...sources, ...testSources]
 })
 
 // You need to export an object to set up your config

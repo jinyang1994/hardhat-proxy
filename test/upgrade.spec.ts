@@ -52,6 +52,10 @@ describe('Upgrade', () => {
       const greet = await firstGreeter.greet()
       // Check greet after run firstImpl.setGreeting
       expect(greet).to.be.equal('Changed by FirstImpl')
+      // Check proxy implementation address
+      expect(await proxy.getFunctionImplementation('0xa4136862')).to.be.equal(
+        firstImpl.address
+      )
     }
 
     // Register last implementation
@@ -74,6 +78,10 @@ describe('Upgrade', () => {
       const greet = await lastGreeter.greet()
       // Check greet after run lastImpl.setGreeting
       expect(greet).to.be.equal('Changed by LastImpl')
+      // Check proxy implementation address
+      expect(await proxy.getFunctionImplementation('0xa4136862')).to.be.equal(
+        lastImpl.address
+      )
     }
 
     // And, consistency between use firstImpl and use lastImpl
