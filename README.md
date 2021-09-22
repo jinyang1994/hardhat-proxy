@@ -8,7 +8,7 @@ Hardhat plugin for integration with [proxy contract](./contracts/Proxy.sol).
 
 ## What
 
-This plugin brings to Hardhat the [proxy contract](./contracts/Proxy.sol), which allows you to manage with the proxy contract in a simple way.
+This plugin brings the [proxy contract](./contracts/Proxy.sol) to Hardhat, which allows you to manage the proxy contract in a simple way.
 
 ## Installation
 
@@ -16,7 +16,7 @@ This plugin brings to Hardhat the [proxy contract](./contracts/Proxy.sol), which
 npm install --save-dev hardhat-proxy
 ```
 
-And add the following statement to your `hardhat.config.js`:
+Add the following statement to your `hardhat.config.js`:
 
 ```javascript
 require('hardhat-proxy')
@@ -30,9 +30,9 @@ import 'hardhat-proxy'
 
 ### Configuration
 
-You need add proxy contract address in `hardhat.config.js`.
+You need to add the proxy contract address in `hardhat.config.js`.
 
-Config Example:
+Config example:
 
 ```typescript
 export default {
@@ -42,11 +42,11 @@ export default {
 }
 ```
 
-Note: You need to manually add the output proxy address in the `hardhat.config.js` after run `hardhat proxy:deploy`
+Note: you need to manually add the output proxy address in the `hardhat.config.js` after running `hardhat proxy:deploy`
 
 ### Usage
 
-First, You need to use `Register` in your implementation contract.
+First, use `Register` in your implementation contract.
 
 ```solidity
 import 'hardhat-proxy/contracts/Register.sol';
@@ -59,7 +59,7 @@ contract Implementation is Register {
 
 ```
 
-Second, you need to override function `register`, and return constant `LibRegister.REGISTER_SUCCESS`.
+Second, override function `register`, and return constant `LibRegister.REGISTER_SUCCESS`.
 
 ```solidity
 import 'hardhat-proxy/contracts/Register.sol';
@@ -74,9 +74,9 @@ contract Implementation is Register {
 
 ```
 
-Last, you need use `scripts` or `CLI` to register it to proxy contract.
+Last, use `scripts` or `CLI` to register it to proxy contract.
 
-Scripts Example:
+Scripts example:
 
 ```typescript
 import hre from 'hardhat'
@@ -84,7 +84,7 @@ import hre from 'hardhat'
 await hre.proxy.bootstrap('0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9')
 ```
 
-CLI Example:
+CLI example:
 
 ```bash
 $ hardhat proxy:deploy --network localhost --impl 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
@@ -102,7 +102,7 @@ $ hardhat proxy:deploy --network localhost
 Proxy contract deployed in hardhat: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 ```
 
-The `proxy` task can register implementation contract to proxy contract
+The `proxy` task can register an implementation contract to proxy contract
 
 ```bash
 $ hardhat proxy:deploy --network localhost --impl 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
@@ -124,7 +124,7 @@ $ hardhat proxy:deploy --network localhost --impl 0xCf7Ed3AccA5a467e9e704C703E8D
 
 ## Environment extensions
 
-This plugins adds an proxy object to the Hardhat Runtime Environment. You can use it in hardhat scripts.
+This plugins adds a proxy object to the Hardhat Runtime Environment. You can use it in hardhat scripts.
 
 ```typescript
 declare module 'hardhat/types/runtime' {
