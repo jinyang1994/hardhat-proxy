@@ -3,6 +3,8 @@ import 'hardhat/types/runtime'
 import { Contract, Event } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
 
+import '@nomiclabs/hardhat-ethers/internal/type-extensions'
+
 declare module 'hardhat/types/config' {
   export interface HardhatUserConfig {
     proxies?: {
