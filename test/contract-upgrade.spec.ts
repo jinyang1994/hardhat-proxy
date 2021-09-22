@@ -1,9 +1,16 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
 import { BigNumber } from '@ethersproject/bignumber'
+import { useFixture } from './helpers'
 
-describe('Upgrade', () => {
-  it('Owner update implementation contract', async () => {
+describe('Contract Upgrade', () => {
+  useFixture('simple-project')
+
+  before(async function () {
+    await this.env.run('compile')
+  })
+
+  it('Owner update implementation contract', async function () {
+    const { ethers } = this.env
     const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const FirstGreeter = await ethers.getContractFactory('Greeter')

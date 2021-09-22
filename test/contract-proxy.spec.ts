@@ -1,9 +1,16 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
 import { BigNumber } from '@ethersproject/bignumber'
+import { useFixture } from './helpers'
 
-describe('Proxy', () => {
-  it('Register function implementation', async () => {
+describe('Contract Proxy', () => {
+  useFixture('simple-project')
+
+  before(async function () {
+    await this.env.run('compile')
+  })
+
+  it('Register function implementation', async function () {
+    const { ethers } = this.env
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
     const Implementation = await ethers.getContractFactory('Implementation')
@@ -15,6 +22,7 @@ describe('Proxy', () => {
     await greeter.deployed()
     await impl.deployed()
 
+    // register functiom implementation
     await proxy.bootstrap(impl.address)
 
     // 0x8d75376a is Implementation contract's setGreetingA function
@@ -27,7 +35,8 @@ describe('Proxy', () => {
     expect(setGreetingB).to.be.equal(impl.address)
   })
 
-  it('Proxy call implementation contract', async () => {
+  it('Proxy call implementation contract', async function () {
+    const { ethers } = this.env
     const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')

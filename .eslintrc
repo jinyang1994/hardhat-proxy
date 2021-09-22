@@ -20,11 +20,30 @@
       "globals": { "task": true }
     },
     {
-      "files": ["scripts/**"],
-      "rules": { "no-process-exit": "off" }
+      "files": ["test/**"],
+      "rules": {
+        "func-names": "off",
+        "no-unused-expressions": "off"
+      }
     }
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  },
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ]
   }
 }

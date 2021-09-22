@@ -1,8 +1,15 @@
 import { expect } from 'chai'
-import { ethers } from 'hardhat'
+import { useFixture } from './helpers'
 
-describe('Ownable', () => {
-  it('Check owner is signer', async () => {
+describe('Contract Ownable', () => {
+  useFixture('simple-project')
+
+  before(async function () {
+    await this.env.run('compile')
+  })
+
+  it('Check owner is signer', async function () {
+    const { ethers } = this.env
     const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const proxy = await Proxy.deploy()
@@ -14,7 +21,8 @@ describe('Ownable', () => {
     expect(owner).to.be.equal(signer.address)
   })
 
-  it('Check if the owner is the signer after register function implementation', async () => {
+  it('Check if the owner is the signer after register function implementation', async function () {
+    const { ethers } = this.env
     const [signer] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
@@ -34,7 +42,8 @@ describe('Ownable', () => {
     expect(owner).to.be.equal(signer.address)
   })
 
-  it('Owner call transferOwnership', async () => {
+  it('Owner call transferOwnership', async function () {
+    const { ethers } = this.env
     const [, receiver] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const proxy = await Proxy.deploy()
@@ -48,7 +57,8 @@ describe('Ownable', () => {
     expect(owner).to.be.equal(receiver.address)
   })
 
-  it('Not owner call transferOwnership', async () => {
+  it('Not owner call transferOwnership', async function () {
+    const { ethers } = this.env
     const [, receiver, other] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const proxy = await Proxy.deploy()
@@ -59,7 +69,8 @@ describe('Ownable', () => {
     ).to.be.revertedWith('Ownable: caller is not the owner')
   })
 
-  it('Not owner call setFunctionImplementation', async () => {
+  it('Not owner call setFunctionImplementation', async function () {
+    const { ethers } = this.env
     const [, other] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
@@ -76,7 +87,8 @@ describe('Ownable', () => {
     ).to.be.revertedWith('Ownable: caller is not the owner')
   })
 
-  it('Not owner call bootstrap', async () => {
+  it('Not owner call bootstrap', async function () {
+    const { ethers } = this.env
     const [, other] = await ethers.getSigners()
     const Proxy = await ethers.getContractFactory('Proxy')
     const Greeter = await ethers.getContractFactory('Greeter')
