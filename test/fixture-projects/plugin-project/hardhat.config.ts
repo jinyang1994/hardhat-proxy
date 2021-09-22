@@ -8,7 +8,7 @@ const hardhatConfig: HardhatUserConfig = {
     root: '../../../'
   },
   proxies: {
-    hardhat: '0x5FbDB2315678afecb367f032d93F642f64180aa3' // first contract address
+    hardhat: '0x5FbDB2315678afecb367f032d93F642f64180aa3' // The first contract created by signer
   }
 }
 
