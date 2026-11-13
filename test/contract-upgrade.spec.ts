@@ -15,9 +15,8 @@ describe('Contract Upgrade', () => {
     const Proxy = await ethers.getContractFactory('Proxy')
     const FirstGreeter = await ethers.getContractFactory('Greeter')
     const LastGreeter = await ethers.getContractFactory('Greeter')
-    const FirstImplementation = await ethers.getContractFactory(
-      'Implementation'
-    )
+    const FirstImplementation =
+      await ethers.getContractFactory('Implementation')
     const LastImplementation = await ethers.getContractFactory('Implementation')
     const proxy = await Proxy.deploy()
     const firstGreeter = await FirstGreeter.deploy('Hello, world! - First')
